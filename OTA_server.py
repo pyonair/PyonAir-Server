@@ -137,10 +137,13 @@ PORT = 8000
 class OTAHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        
         print("Got query for: {}".format(self.path))
 
         # Parse the URL
         path = urlparse(self.path).path
+        print(path)
+        print(self.headers)
         query_components = parse_qs(urlparse(self.path).query)
         host = self.headers.get('Host')
 
@@ -152,6 +155,7 @@ class OTAHandler(BaseHTTPRequestHandler):
 
             # If query specified a version generate a diff from that version
             # otherwise return a manifest of all files
+            print(query_components)
             if "current_ver" in query_components:
                 current_ver = query_components["current_ver"][0]
             else:
